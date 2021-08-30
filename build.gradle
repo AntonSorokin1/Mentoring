@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE')
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:2.5.4')
+    }
+}
+
+subprojects {
+    group = "org.example.Mentoring"
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    task wrapper(type: Wrapper) {
+        gradleVersion = '4.10.2'
+    }
+
+    sourceCompatibility = 11
+    targetCompatibility = 11
+    compileJava.options.encoding = 'UTF-8'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.projectlombok:lombok:1.18.20'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.4'
+    }
+
+    task sourceJar(type: Jar) {
+        from sourceSets.main.allJava
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
